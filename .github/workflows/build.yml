@@ -1,0 +1,54 @@
+name: Build and Test Artifacts
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-rust-and-java-binaries:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        name: Set up Rust
+      
+      - name: Set up Java JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 11
+          distribution: 'temurin'
+          architecture: x64
+      
+      - uses: actions/checkout@v4
+        name: Checkout code
+        with:
+          fetch-depth: 1
+          path: cedarling4j
+        
+      - uses: actions/checkout@v4
+        name: Checkout Janssen
+        with:
+          fetch-depth: 1
+          path: jans
+          repository: JanssenProject/jans
+      
+      - name: Setup jans-cedarling build dependency for rust jni bridge
+        run: |
+          mkdir -p ${{github.workspace}}/cedarling4j/rust/crates
+          mkdir -p ${{github.workspace}}/cedarling4j/java/lib
+          cp -r ${{github.workspace}}/jans/jans-cedarling ${{github.workspace}}/cedarling4j/rust/crates/jans-cedarling
+      
+      - name: Build rust jni bridge for cedarling
+        run: cargo build --release
+        working-directory: ${{github.workspace}}/cedarling4j/rust/
+      
+      - name: Build java library
+        run:  mvn compile
+        working-directory: ${{github.workspace}}/cedarling4j/java/
+      
+      - name: Set up Java test environment
+        run: cp ${{github.workspace}}/cedarling4j/java/lib
+      
+      - name: Run Java tests
+        run: mvn test
+      
