@@ -1,0 +1,57 @@
+# .gitignore file
+
+##############################
+## Rust
+##############################
+rust/target
+crates
+rust/Cargo.lock
+
+##############################
+## Java
+##############################
+.mtj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+##############################
+## Maven
+##############################
+java/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+java/.mvn/
+java/.mvn/timing.properties
+java/.mvn/wrapper/maven-wrapper.jar
+
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
+
+##############################
+## OS X
+##############################
+.DS_Store
+
+##############################
+## Miscellaneous
+##############################
+*.log
+
+##############################
+## cpp
+##############################
+java/src/main/cpp/*
