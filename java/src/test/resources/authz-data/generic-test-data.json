@@ -1,0 +1,71 @@
+{
+    "access_token": {
+      "sub": "boG8dfc5MKTn37o7gsdCeyqL8LpWQtgoO41m1KZwdq0",
+      "code": "bf1934f6-3905-420a-8299-6b2e3ffddd6e",
+      "iss": "https://test.jans.org",
+      "token_type": "Bearer",
+      "client_id": "5b4487c4-8db1-409d-a653-f907b8094039",
+      "aud": "5b4487c4-8db1-409d-a653-f907b8094039",
+      "acr": "basic",
+      "x5t#S256": "",
+      "scope": [
+           "openid",
+           "profile"
+      ],
+      "org_id": "some_long_id",
+      "auth_time": 1724830746,
+      "exp": 1724945978,
+      "iat": 1724832259,
+      "jti": "access_tkn_jti",
+      "username": "admin@gluu.org",
+      "name": "Default Admin User",
+      "status": {
+          "status_list": {
+          "idx": 201,
+          "uri": "https://admin-ui-test.gluu.org/jans-auth/restv1/status_list"
+          }
+      }
+    },
+
+    "id_token": {
+      "sub": "boG8dfc5MKTn37o7gsdCeyqL8LpWQtgoO41m1KZwdq0",
+      "code": "bf1934f6-3905-420a-8299-6b2e3ffddd6e",
+      "iss": "https://test.jans.org",
+      "token_type": "Bearer",
+      "client_id": "5b4487c4-8db1-409d-a653-f907b8094039",
+      "aud": "5b4487c4-8db1-409d-a653-f907b8094039",
+      "acr": "basic",
+      "amr": "pwd",
+      "username": "admin@gluu.org",
+      "country": "US",
+      "x5t#S256": "",
+      "scope": [
+        "openid",
+        "profile"
+      ],
+      "org_id": "some_long_id",
+      "auth_time": 1724830746,
+      "exp": 1724945978,
+      "iat": 1724832259,
+      "jti": "id_tkn_jti",
+      "name": "Default Admin User",
+      "status": {
+          "status_list": {
+          "idx": 201,
+          "uri": "https://admin-ui-test.gluu.org/jans-auth/restv1/status_list"
+          }
+      }
+    },
+
+    "userinfo_token" : {
+      "iss": "https://test.jans.org",
+      "sub": "boG8dfc5MKTn37o7gsdCeyqL8LpWQtgoO41m1KZwdq0",
+      "client_id": "5b4487c4-8db1-409d-a653-f907b8094039",
+      "aud": "5b4487c4-8db1-409d-a653-f907b8094039",
+      "username": "admin@gluu.org",
+      "name": "Default Admin User",
+      "email": "admin@gluu.org",
+      "country": "US",
+      "jti": "usrinfo_tkn_jti"
+    }
+}

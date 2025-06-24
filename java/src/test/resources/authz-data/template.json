@@ -1,0 +1,15 @@
+{
+   "tokens": [
+
+   ],
+
+   "action": "",
+
+   "resource": {
+      "id" : "",
+      "entity_type" :"",
+      "attributes" : {} 
+   },
+
+   "context": {}
+}
