@@ -50,6 +50,7 @@ java/.mvn/wrapper/maven-wrapper.jar
 ## Miscellaneous
 ##############################
 *.log
+java/lib
 
 ##############################
 ## cpp
