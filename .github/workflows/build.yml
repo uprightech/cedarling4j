@@ -47,7 +47,7 @@ jobs:
         working-directory: ${{github.workspace}}/cedarling4j/java/
       
       - name: Set up Java test environment
-        run: cp ${{github.workspace}}/cedarling4j/java/lib
+        run: cp ${{github.workspace}}/cedarling4j/rust/target/libcedarling4j.so ${{github.workspace}}/cedarling4j/java/lib
       
       - name: Run Java tests
         run: mvn test
