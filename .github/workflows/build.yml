@@ -42,13 +42,10 @@ jobs:
         run: cargo build --release
         working-directory: ${{github.workspace}}/cedarling4j/rust/
       
-      - name: Build java library
-        run:  mvn compile
+      - name: Build and test java library
         working-directory: ${{github.workspace}}/cedarling4j/java/
-      
-      - name: Set up Java test environment
-        run: cp ${{github.workspace}}/cedarling4j/rust/target/release/libcedarling4j.so ${{github.workspace}}/cedarling4j/java/lib
-      
-      - name: Run Java tests
-        run: mvn test
+        run: |
+          mvn compile
+          cp ${{github.workspace}}/cedarling4j/rust/target/release/libcedarling4j.so ${{github.workspace}}/cedarling4j/java/lib
+          mvn test
       
