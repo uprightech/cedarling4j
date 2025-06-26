@@ -1,3 +1,8 @@
+// This software is available under the Apache-2.0 license.
+// See https://www.apache.org/licenses/LICENSE-2.0.txt for full text.
+//
+// Copyright (c) 2025, Gluu, Inc.
+
 use crate::jni::util::{call_jni_method_to_string};
 use jni::JNIEnv;
 use jni::objects::{JObject};

@@ -1,3 +1,8 @@
+// This software is available under the Apache-2.0 license.
+// See https://www.apache.org/licenses/LICENSE-2.0.txt for full text.
+//
+// Copyright (c) 2025, Gluu, Inc.
+
 use cedarling::{AuthorizeResult};
 use crate::{Result};
 use crate::cedar_policy::{JavaPolicyResponse};
