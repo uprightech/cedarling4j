@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head><title></title></head>
+    <body>
+        <h1>Overview of the Cedarling Java Wrapper</h1>
+
+        <p>
+            The Cedarling Java Wrapper provides a Java interface to interact with the 
+            <a href="https://docs.jans.io/stable/cedarling">Cedarling</a> library, which 
+            is written in Rust. This library enables Java developers, to leverage Cedarling's 
+            functionality for policy evaluation and authorization in a seamless and idiomatic 
+            Java manner.
+        </p>
+
+        <h2>Architecture</h2>
+        <p>
+            The wrapper consists of two primary components:
+        </p>
+        <ul>
+            <li>
+                <b>The Rust JNI Interface library</b>: A translation layer that bridges the Rust-based 
+                Cedarling library and the Java Virtual Machine (JVM) using Java Native Interface (JNI).
+                This layer handles the low-level communication and data marshalling between Java and Rust.
+            </li>
+            <li>
+                <b>The Java Library</b>: A high-level Java API that provides a convenient and type-safe interface
+                 for interacting with Cedarling via the Rust JNI Interface above. This library exposes the core
+                 functionality of Cedarling through the {@link io.jans.cedarling.bridge.Cedarling Cedarling} class, which
+                 serves as the primary entry point for policy evaluation and authorization tasks.
+            </li>
+        </ul>
+
+        <h2>Usage of Builders</h2>
+        <p>
+            To ensure some underlying rust objects used for cedarling are valid, use of a builder pattern for both the Java
+            configuration and authentication objects is encouraged , although not enforced. These builders can help catch invalid 
+            object states, albeit ultimately the rust cedarling engine will do the required validation. The builders just make sure
+            they objects passed are "rust-compliant". An example would be that rust doesn't have a {@code null} concept, which makes 
+            it imperative null values aren't passed to cedarling.  As the library evolves, a decision will be made to make the use of 
+            builders mandatory. It will simplify the code in the Rust JNI Interface library. 
+        </p>
+
+        <h2>Core Concept</h2>
+        <p>
+            The central component of this library is the {@link io.jans.cedarling.bridge.Cedarling Cedarling} class, which encapsulates
+            the interaction with the underlying Rust-based cedarling library. An instance of this class maps directly to a Rust instance 
+            of the Cedarling engine, and it's methods marshall data to-from Cedarling internally. As the object holds native Rust resources,
+            it implements {@link java.lang.AutoCloseable AutoCloseable} to ensure proper resource cleanup. 
+        </p>
+
+        <h2>Usage Example</h2>
+        <p>
+            Please check the examples directory within the same project for usage samples. 
+        </p>
+        
+        <h2>Resource Management Warning</h2>
+        <div>
+            <b>Important</b>: The {@link io.jans.cedarling.bridge.Cedarling Cedarling} class holds native Rust resources through the JNI interface.
+            To prevent resource leaks, it is critical to either:
+            <ul>
+                <li>Use the {@link io.jans.cedarling.bridge.Cedarling Cedarling} object within a try-with-resources block, which automatically calls
+                     {@link io.jans.cedarling.bridge.Cedarling#close()} when the block is exited, or 
+                </li>
+                <li>Explicitly call {@link io.jans.cedarling.bridge.Cedarling#close()} when the object is no longer needed</li>
+            </ul>
+            Failure to properly close the {@link io.jans.cedarling.bridge.Cedarling} object may result in memory leaks or other resource-related 
+            issues in the underlying Rust layer.
+        </div>
+
+        <p>
+            For more information about Cedarling and its capabilities, see the
+            <a href="https://docs.jans.io/stable/cedarling">official Cedarling documentation</a>
+        </p>
+
+    </body>
+</html>
