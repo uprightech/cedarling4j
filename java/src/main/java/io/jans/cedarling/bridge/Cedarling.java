@@ -55,13 +55,25 @@ public class Cedarling implements Closeable {
     /**
      * Evaluates an authorization request 
      * <p>
-     *  This is the standard (token-based) interface where the Principal is extracted
-     *  from a JWT.
+     *  This is the standard (token-based) interface where the Principal is derived
+     *  from a signed JWT.
      * </p>
-     * @param request
-     * @return
+     * @param request io.jans.cedarling.bridge.authz.AuthorizeRequest the authorization request with signed JWT tokens 
+     * @return The authorization result containing details about the success or failure of the operation
+     * @throws io.jans.cedarling.bridge.CedarlingError If the authorization request is null or invalid or an error occurs in the Rust bridge
      */
     public native AuthorizeResult authorize(final AuthorizeRequest request) throws CedarlingError;
+
+    /**
+     * Evaluates an authorization request with the principal specified as a key value pair (no signed JWT)
+     * <p>
+     *  This authorization request method , unlike {@link io.jans.cedarling.bridge.Cedarling#authorize} does not
+     *  have the requirement of having the principals derived from a signed JWT. 
+     * </p>
+     * @param request io.jans.cedarling.bridge.authz.AuthorizeRequestUnsigned the unsigned authorization request
+     * @return The authorization result containing details about the success or failure of the operation
+     * @throws io.jans.cedarling.bridge.CedarlingError If the authorization request is null or invalid or an error occurs in the Rust bridge 
+     */
     public native AuthorizeResult authorizeUnsigned(final AuthorizeRequestUnsigned request) throws CedarlingError;
 
     private native void createNativeCedarling(final BootstrapConfiguration config) throws CedarlingError;
