@@ -12,6 +12,34 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * An authorization request representation with signed tokens for principal derivation
+ * <p>
+ *  This class represents an authorization request with signed JWT tokens 
+ *  as used in {@link io.jans.cedarling.bridge.Cedarling#authorize}. <br/>
+ *  Authorization requests follow the PARC model:
+ * </p>
+ * <ul>
+ *  <li>
+ *      The <i>action</i> is represented by the {@link io.jans.cedarling.bridge.authz.AuthorizeRequest#action} field. <br/> 
+ *      An example action would be Jans::Action::&quot;Update&quot;
+ *  </li>
+ *  <li>
+ *      The <i>resource</i> is represented by the {@link io.jans.cedarling.bridge.authz.AuthorizeRequest#resource} field. <br/>
+ *      The resource has an id, type and associated attributes. See {@link io.jans.cedarling.bridge.authz.EntityData} for more information.
+ *  </li>
+ *  <li>
+ *      The <i>context</i> is represented by the {@link io.jans.cedarling.bridge.authz.AuthorizeRequest#context}. <br/>
+ *      This is a serialized json object, wrapped in a {@link io.jans.cedarling.bridge.authz.Context}. See the latter class for more information.
+ *  </li>
+ * </ul>
+ * <p>
+ *  In order to prevent ill formed objects,  authorization requests are instantiated using <br/>
+ *  a {@link io.jans.cedarling.bridge.authz.AuthorizeRequest.Builder Builder} class which can itself 
+ *  be instantiated by calling the 
+ * {@link io.jans.cedarling.bridge.authz.AuthorizeRequest#builder()} static method.
+ * </p>
+ */
 public class AuthorizeRequest {
     
     private static final String ACCESS_TOKEN_KEY = "access_token";
@@ -28,22 +56,30 @@ public class AuthorizeRequest {
         tokens = new HashMap<>();
     }
 
-    
-
+    /**
+     * Gets authorization request resouce 
+     */
     public EntityData getResource() {
 
         return resource;
     }
 
+    /**
+     * 
+     */
     public Context getContext() {
 
         return context;
     }
 
+    /**
+     * 
+     */
     public String getAction() {
 
         return action;
     }
+
 
     public void addToken(final String name, final String value) {
 
