@@ -11,6 +11,10 @@ import java.util.Optional;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A lightweight encapsulation around cedarling's authorization result 
+ * 
+ */
 public class AuthorizeResult {
     
     private Optional<PolicyResponse> workload;
@@ -19,6 +23,9 @@ public class AuthorizeResult {
     private boolean decision;
     private String requestId;
 
+    /**
+     * Constructor 
+     */
     public AuthorizeResult() {
 
         workload = Optional.ofNullable(null);
@@ -28,26 +35,47 @@ public class AuthorizeResult {
         requestId = "";
     }
 
+    /**
+     * Gets the policy evaluation result for the workload
+     * @return an optional policy evaluation result
+     */
     public Optional<PolicyResponse> getWorkload() {
 
         return workload;
     }
 
+    /**
+     * Gets the policy evaluation result for the person (principal)
+     * @return an optional policy evaluation result
+     */
     public Optional<PolicyResponse> getPerson() {
 
         return person;
     }
 
+    /**
+     * Gets a map of the principals involved during the policy evaluation 
+     * Each key into the map is a unique string 
+     * @return
+     */
     public Map<String,PolicyResponse> getPrincipals() {
 
         return principals;
     }
 
+    /**
+     * Gets the authorization decision result 
+     * @return {@code true} if the action in the authorization request is allowed. {@code false} otherwise.
+     */
     public boolean isAllowed() {
 
         return decision;
     }
 
+    /**
+     * Gets the requestid associated with the authorization request 
+     * @return A string representing the requestid 
+     */
     public String getRequestId() {
 
         return requestId;
