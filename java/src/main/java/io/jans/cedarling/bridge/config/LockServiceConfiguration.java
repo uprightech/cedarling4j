@@ -11,6 +11,13 @@ import java.time.Duration;
 
 import io.jans.cedarling.bridge.config.LogLevel;
 
+/**
+ * Lock service configuration 
+ * <p>
+ *   The Cedarling can be configured to work with a lock logger, which can be configured
+ *   using the settings here.
+ * </p>
+ */
 public class LockServiceConfiguration {
 
     private LogLevel logLevel;
@@ -23,11 +30,19 @@ public class LockServiceConfiguration {
     private boolean listenSse;
     private boolean acceptInvalidCerts;
 
+    /**
+     * Default constructor
+     */
     public LockServiceConfiguration() {
 
         acceptInvalidCerts = false;
     }
 
+    /**
+     * Sets the log level 
+     * @param logLevel
+     * @return
+     */
     public LockServiceConfiguration setLogLevel(LogLevel logLevel) {
 
         this.logLevel = logLevel;

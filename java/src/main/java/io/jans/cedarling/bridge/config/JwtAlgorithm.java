@@ -5,7 +5,9 @@
  */
 
 package io.jans.cedarling.bridge.config;
-
+/**
+ * Supported JWT signing Algorithms
+ */
 public enum JwtAlgorithm {
     HS256,
     HS384,
