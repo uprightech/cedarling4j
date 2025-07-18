@@ -222,8 +222,8 @@ public class AuthorizeRequest {
 
         /**
          * Specify the context that will be used when performing authorization against a request
-         * @param context
-         * @return
+         * @param context the context
+         * @return the current builder instance
          */
         public Builder context(final Context context) {
 
