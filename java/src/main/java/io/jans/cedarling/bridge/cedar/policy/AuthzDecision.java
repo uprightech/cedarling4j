@@ -6,6 +6,14 @@
 
 package io.jans.cedarling.bridge.cedar.policy; 
 
+/**
+ * Represents an authorization decision, mirroring the
+ * {@code Decision} enum in the Cedar policy library.
+ * <p>
+ *   This enum is used to translate authorization outcomes from the rust bridge 
+ *   Documentation about the rust enum can be found <a href="https://docs.rs/cedar-policy/latest/cedar_policy/enum.Decision.html">Here</a>
+ * </p>
+ */
 public enum AuthzDecision {
     ALLOW,
     DENY
