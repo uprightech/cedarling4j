@@ -98,7 +98,7 @@ public class CedarlingBaseTest {
         authzconfig.setUseUserPrincipal(true)
             .setUseWorkloadPrincipal(true)
             .setDecisionLogDefaultJwtId(AuthorizationConfiguration.DEFAULT_DECISION_LOG_JWT_ID)
-            .setIdTokenTrustMode(IdTokenTrustMode.NONE)
+            .setIdTokenTrustMode(IdTokenTrustMode.NEVER)
             .setPrincipalBoolOperator(new JsonRule(DEFAULT_JSON_RULE));
         return authzconfig;
     }

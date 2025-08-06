@@ -6,7 +6,16 @@
 
 package io.jans.cedarling.bridge.config;
 
+/**
+ * Workload boolean operator 
+ */
 public enum WorkloadBoolOperator {
+    /**
+     * AND
+     */
     AND,
+    /**
+     * OR
+     */
     OR
 }

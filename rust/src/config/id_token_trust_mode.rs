@@ -10,7 +10,9 @@ use crate::{Result,CedarlingBridgeError};
 use crate::jni::util::{call_jni_method_to_string};
 
 const JAVA_CLS_NAME: &str = "io/jans/cedarling/bridge/config/IdTokenTrustMode";
-const JAVA_ID_TOKEN_TRUST_MODE_VALUE_NONE: &str = "NONE";
+const JAVA_ID_TOKEN_TRUST_MODE_VALUE_ALWAYS: &str = "ALWAYS";
+const JAVA_ID_TOKEN_TRUST_MODE_VALUE_NEVER: &str = "NEVER";
+const JAVA_ID_TOKEN_TRUST_MODE_VALUE_IF_PRESENT: &str = "IF_PRESENT";
 const JAVA_ID_TOKEN_TRUST_MODE_VALUE_STRICT: &str = "STRICT";
 
 pub (crate) struct JavaIdTokenTrustMode {
@@ -38,7 +40,9 @@ impl JavaIdTokenTrustMode {
     ) ->Result<IdTokenTrustMode> {
 
         match &self.name as &str {
-            JAVA_ID_TOKEN_TRUST_MODE_VALUE_NONE => Ok( IdTokenTrustMode::None ),
+            JAVA_ID_TOKEN_TRUST_MODE_VALUE_ALWAYS => Ok( IdTokenTrustMode::Always ),
+            JAVA_ID_TOKEN_TRUST_MODE_VALUE_NEVER => Ok(IdTokenTrustMode::Never),
+            JAVA_ID_TOKEN_TRUST_MODE_VALUE_IF_PRESENT => Ok(IdTokenTrustMode::IfPresent),
             JAVA_ID_TOKEN_TRUST_MODE_VALUE_STRICT => Ok( IdTokenTrustMode::Strict ),
             _ => Err( CedarlingBridgeError::UnknownEnumValue{
                 enum_cls: JAVA_CLS_NAME,

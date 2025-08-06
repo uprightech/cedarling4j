@@ -9,7 +9,7 @@ package io.jans.cedarling.bridge.util;
 
 public class Constraints {
     
-    public static void ensureNotNull(final Object obj,final String message) {
+    public static void ensureNotNull(final Object obj,final String message) throws IllegalArgumentException {
 
         if(obj == null) {
             throw new IllegalArgumentException(message);

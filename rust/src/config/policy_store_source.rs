@@ -8,7 +8,7 @@ use jni::JNIEnv;
 use jni::objects::{JObject};
 use crate::{Result,CedarlingBridgeError};
 use crate::jni::util::{call_jni_method_to_string};
-use std::path::{Path};
+use std::path::{PathBuf};
 
 const JAVA_CLS_NAME: &str   = "io/jans/cedarling/bridge/config/PolicyStoreSource";
 const JAVA_ENUM_VALUE_JSON: &str = "JSON";
@@ -41,7 +41,7 @@ impl JavaPolicyStoreSource {
         &self,
         data_fn: D,
         data_path_fn: P
-    ) -> Result<PolicyStoreSource> where D: FnOnce() -> Result<String>, P: FnOnce() -> Result<Box<Path>>  {
+    ) -> Result<PolicyStoreSource> where D: FnOnce() -> Result<String>, P: FnOnce() -> Result<PathBuf>  {
 
         let val = self.name.clone();
 

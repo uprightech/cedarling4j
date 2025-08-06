@@ -6,9 +6,24 @@
 
 package io.jans.cedarling.bridge.config;
 
+/**
+ * Log type or log destination 
+ */
 public enum LogType {
+    /**
+     * No logging 
+     */
     OFF,
+    /**
+     * Logs to memory
+     */
     MEMORY,
+    /**
+     * Logs to stdout
+     */
     STDOUT,
+    /**
+     * Logs to the Jans Lock Server
+     */
     LOCK
 }

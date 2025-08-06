@@ -11,7 +11,7 @@ use crate::jni::{JniCache,JavaFile};
 use crate::config::{JavaPolicyStoreSource};
 use crate::jni::util::{call_jni_object_method,call_jni_string_method,require_some};
 
-use std::path::{Path};
+use std::path::{Path,PathBuf};
 use std::sync::{Mutex,LazyLock};
 
 const JAVA_CLS_NAME: &str = "io/jans/cedarling/bridge/config/PolicyStoreConfiguration";
@@ -115,11 +115,11 @@ impl <'local> JavaPolicyStoreConfig <'local> {
 
         let data_fn = || -> Result<String> { require_some(opt_data,JAVA_CLS_NAME,"source") };
 
-        let data_path_fn = || -> Result<Box<Path>> {
+        let data_path_fn = || -> Result<PathBuf> {
 
             let data_path_obj = require_some(opt_data_path,JAVA_CLS_NAME,"dataPath")?;
             match data_path_obj.get_absolute_path(env)? {
-                Some(data) => Ok(Path::new(&data).into()),
+                Some(data) => Ok(Path::new(&data).to_path_buf()),
                 None => Err(CedarlingBridgeError::GenericError("Could not get policy store file path".to_string()))
             }
         };
