@@ -16,11 +16,9 @@ package io.jans.cedarling.bridge.authz;
  * The fields in the class are:
  * <ul>
  *  <li>
- *      {@link io.jans.cedarling.bridge.authz.EntityData#type}. This is the entity's type
- *  </li>
- *  <li>
- *      {@link io.jans.cedarling.bridge.authz.EntityData#id}. 
- *      This is the entity's unique id which helps discriminate it from other entities of the same type
+ *      {@link io.jans.cedarling.bridge.authz.EntityData#cedarMapping}. 
+ *      This is the entity's cedar mapping properties encapsulated in an object of class
+ *      {@link io.jans.cedarling.bridge.authz.CedarEntityMapping}
  *  </li>
  *  <li>
  *      {@link io.jans.cedarling.bridge.authz.EntityData#attributes}. 
@@ -32,83 +30,51 @@ package io.jans.cedarling.bridge.authz;
  */
 public class EntityData {
 
-    private String id;
-    private String type;
+    private CedarEntityMapping cedarMapping;
     private String attributes;
 
     /**
      * Default constructor
-     * Creates an Entity with no id , type and attributes 
+     * Creates an Entity with no cedar mapping and attributes
      */
     public EntityData() {
 
+        cedarMapping = null;
         attributes = "{}";
     }
 
     /**
-     * Creates an entity with the specified id and type but no attributes 
+     * Creates an entity with the specified cedar mapping and attributes 
      * @param id the entity's id
      * @param type the entity's type 
      */
-    public EntityData(String id, String type) {
+    public EntityData(CedarEntityMapping cedarMapping, String attributes) {
 
-        this.id   = id;
-        this.type = type;
-        attributes = "{}";
-    }
-    
-    /**
-     * Creates an entity with the specified id , type and attributes 
-     * @param id the entity's id
-     * @param type the entity's type 
-     * @param attributes the entity's attributes as a json string 
-     */
-    public EntityData(String id, String type, String attributes) {
-
-        this.id = id;
-        this.type = type;
+        this.cedarMapping = cedarMapping;
         this.attributes = attributes;
     }
+    
 
     /**
-     * Gets the entity's type
-     * @return the entity's type 
+     * Gets the entity's cedar mapping
+     * @return the entity's cedar mapping
      */
-    public String getType() {
+    public CedarEntityMapping getCedarMapping() {
 
-        return type;
+        return cedarMapping;
     }
 
     /**
-     * Sets the entity's type
-     * @param type the entity's type
+     * Sets the entity's cedar mapping
+     * @param type the entity's cedar mapping
      * @return the current {@code io.jans.cedarling.bridge.authz.EntityData} instance
      */
-    public EntityData setType(String type) {
+    public EntityData setCedarMapping(CedarEntityMapping cedarMapping) {
 
-        this.type = type;
+        this.cedarMapping = cedarMapping;
         return this;
     }
 
-    /**
-     * Get the entity's id
-     * @return the entity's id
-     */
-    public String getId() {
-
-        return id;
-    }
-
-    /**
-     * Set the entity's id
-     * @param id the entity's id
-     * @return the current {@code io.jans.cedarling.bridge.authz.EntityData} instance
-     */
-    public EntityData setId(String id) {
-
-        this.id = id;
-        return this;
-    }
 
     /**
      * Get the entity's attributes 

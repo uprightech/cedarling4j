@@ -20,6 +20,7 @@
                 "exp": 1724945978,
                 "iat": 1724832259,
                 "jti": "access_tkn_jti",
+                "username": "admin@gluu.org",
                 "name": "Default Admin User",
                 "status": {
                     "status_list": {
@@ -82,7 +83,7 @@
         "entity_type": "Jans::Issue",
         "attributes": {
             "org_id": "some_long_id",
-            "country": "US"
+            "country": "France"
         }
     },
     "context": {}

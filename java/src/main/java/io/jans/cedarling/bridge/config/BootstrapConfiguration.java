@@ -34,6 +34,8 @@ public class BootstrapConfiguration {
     private AuthorizationConfiguration authzConfiguration;
     private EntityBuilderConfiguration entityBuilderConfiguration;
     private LockServiceConfiguration lockConfiguration;
+    private Long maxDefaultEntities;
+    private Long maxBase64Size;
 
     /**
      * Constructor
@@ -176,6 +178,46 @@ public class BootstrapConfiguration {
     }
 
     /**
+     * Specifies the maximum number of default entries allowed in a policy store
+     * @param maxDefaultEntities the maximum number of default entries allowed in a policy store
+     * @return the currnet instance of the bootstrap configuration
+     */
+    public BootstrapConfiguration setMaxDefaultEntities(Long maxDefaultEntities) {
+
+        this.maxDefaultEntities = maxDefaultEntities;
+        return this;
+    }
+
+    /**
+     * Gets the maximum number of default entries allowed in a policy store 
+     * @return the maximum number of default entries allowed in a policy store
+     */
+    public Long getMaxDefaultEntities() {
+
+        return maxDefaultEntities;
+    }
+
+    /**
+     * Specifies the maximum size of base64-encoded default entity strings in bytes 
+     * @param maxBase64Size maximum size of base64-encoded default entity strings in bytes 
+     * @return the current instance of the bootstrap configuration
+     */
+    public BootstrapConfiguration setMaxBase64Size(Long maxBase64Size) {
+
+        this.maxBase64Size = maxBase64Size;
+        return this;
+    }
+
+    /**
+     * Gets the maximum size of base64-encoded default entity strings in bytes
+     * @return the maximum size of base64-encoded default entity strings in bytes
+     */
+    public Long getMaxBase64Size() {
+
+        return maxBase64Size;
+    }
+
+    /**
      * Specifies the lock service settings to be used for this configuration
      * @param lockConfiguration the lock service's configuration
      * @return the current instance of the bootstrap configuration 
@@ -284,6 +326,28 @@ public class BootstrapConfiguration {
         public Builder lockConfig(final LockServiceConfiguration config) {
 
             config_.lockConfiguration = config;
+            return this;
+        }
+
+        /**
+         * Specifies the maximum number of default entries allowed in a policy store
+         * @param maxDefaultEntities the maximum number of default entries allowed in a policy store
+         * @return the current builder's instance
+         */
+        public Builder maxDefaultEntities(Long maxDefaultEntities) {
+
+            config_.maxDefaultEntities = maxDefaultEntities;
+            return this;
+        }
+
+        /**
+         * Specifies the maximum size of base64-encoded default entity strings in bytes
+         * @param maxBase64Size the maximum size of base64-encoded default entity strings in bytes
+         * @return the current builder's instance
+         */
+        public Builder maxBase64Size(Long maxBase64Size) {
+
+            config_.maxBase64Size = maxBase64Size;
             return this;
         }
 

@@ -6,10 +6,11 @@
 use cedarling::*;
 use crate::{Result};
 use crate::jni::{JniCache};
-use crate::jni::util::{java_string_to_native_string,call_jni_object_method,require_some};
+use crate::jni::util::{java_string_to_native_string,call_jni_object_method,call_jni_opt_long_method,require_some};
 use crate::config::*;
 use jni::JNIEnv;
 use jni::objects::{JMethodID,JObject};
+use jni::sys::{jlong};
 
 
 use std::sync::{Mutex,LazyLock};
@@ -37,6 +38,12 @@ const JAVA_METHOD_SIG_GET_ENTITY_BUILDER_CONFIGURATION: &str = "()Lio/jans/cedar
 const JAVA_METHOD_NAME_GET_LOCK_CONFIGURATION: &str = "getLockConfiguration";
 const JAVA_METHOD_SIG_GET_LOCK_CONFIGURATION: &str = "()Lio/jans/cedarling/bridge/config/LockServiceConfiguration;";
 
+const JAVA_METHOD_NAME_GET_MAX_DEFAULT_ENTITIES: &str = "getMaxDefaultEntities";
+const JAVA_METHOD_SIG_GET_MAX_DEFAULT_ENTITIES: &str = "()Ljava/lang/Long;";
+
+const JAVA_METHOD_NAME_GET_MAX_BASE64_SIZE: &str = "getMaxBase64Size";
+const JAVA_METHOD_SIG_GET_MAX_BASE64_SIZE: &str = "()Ljava/lang/Long;";
+
 static LOCAL_JNI_CACHE: LazyLock< Mutex<JniCache> > = LazyLock::new(|| Mutex::new(JniCache::new()));
 
 pub (crate) struct JavaBootstrapConfig<'local> {
@@ -47,7 +54,9 @@ pub (crate) struct JavaBootstrapConfig<'local> {
     get_jwt_configuration_method: JMethodID,
     get_authorization_configuration_method: JMethodID,
     get_entity_builder_configuration_method: JMethodID,
-    get_lock_configuration_method: JMethodID
+    get_lock_configuration_method: JMethodID,
+    get_max_default_entities_method: JMethodID, 
+    get_max_base64_size_method: JMethodID
 }
 
 impl <'local> JavaBootstrapConfig <'local> {
@@ -104,7 +113,22 @@ impl <'local> JavaBootstrapConfig <'local> {
             JAVA_CLS_NAME,
             JAVA_METHOD_NAME_GET_LOCK_CONFIGURATION,
             JAVA_METHOD_SIG_GET_LOCK_CONFIGURATION
+        )?;
+
+        cache.add_instance_method(
+            env,
+            JAVA_CLS_NAME,
+            JAVA_METHOD_NAME_GET_MAX_DEFAULT_ENTITIES,
+            JAVA_METHOD_SIG_GET_MAX_DEFAULT_ENTITIES
+        )?;
+
+        cache.add_instance_method(
+            env,
+            JAVA_CLS_NAME,
+            JAVA_METHOD_NAME_GET_MAX_BASE64_SIZE,
+            JAVA_METHOD_SIG_GET_MAX_BASE64_SIZE
         )
+
     }
 
     pub fn new (
@@ -159,6 +183,18 @@ impl <'local> JavaBootstrapConfig <'local> {
             JAVA_METHOD_SIG_GET_LOCK_CONFIGURATION
         );
 
+        let get_max_default_entities_key =  (
+            JAVA_CLS_NAME,
+            JAVA_METHOD_NAME_GET_MAX_DEFAULT_ENTITIES,
+            JAVA_METHOD_SIG_GET_MAX_DEFAULT_ENTITIES
+        );
+
+        let get_max_base64_size_key = (
+            JAVA_CLS_NAME,
+            JAVA_METHOD_NAME_GET_MAX_BASE64_SIZE,
+            JAVA_METHOD_SIG_GET_MAX_BASE64_SIZE
+        );
+
         Ok (
             Some ( JavaBootstrapConfig {
                 jobj: jobj,
@@ -168,7 +204,9 @@ impl <'local> JavaBootstrapConfig <'local> {
                 get_jwt_configuration_method: cache.get_instance_method(&get_jwt_configuration_key)?,
                 get_authorization_configuration_method: cache.get_instance_method(&get_authorization_configuration_key)?,
                 get_entity_builder_configuration_method: cache.get_instance_method(&get_entity_builder_configuration_key)?,
-                get_lock_configuration_method: cache.get_instance_method(&get_lock_configuration_key)?
+                get_lock_configuration_method: cache.get_instance_method(&get_lock_configuration_key)?,
+                get_max_default_entities_method: cache.get_instance_method(&get_max_default_entities_key)?,
+                get_max_base64_size_method: cache.get_instance_method(&get_max_base64_size_key)?
             } )
         )
     }
@@ -211,6 +249,9 @@ impl <'local> JavaBootstrapConfig <'local> {
             .map(|val| val.as_cedarling_lock_service_config(env))
             .transpose()?;
 
+        let max_default_entities: Option<usize> = self.get_max_default_entities(env)?.map(|v| v as usize);
+        let max_base64_size : Option<usize> = self.get_max_base64_size(env)?.map(|v| v as usize);
+
         Ok(BootstrapConfig {
             application_name:  app_name,
             log_config: log_config,
@@ -218,7 +259,9 @@ impl <'local> JavaBootstrapConfig <'local> {
             jwt_config: jwt_config,
             authorization_config: authz_config,
             entity_builder_config: entity_builder_config,
-            lock_config: lock_config
+            lock_config: lock_config,
+            max_default_entities: max_default_entities,
+            max_base64_size: max_base64_size
         })
     }
 
@@ -294,4 +337,23 @@ impl <'local> JavaBootstrapConfig <'local> {
         let lock_config_obj = call_jni_object_method(env,&self.jobj,method,&[])?;
         JavaLockServiceConfig::new(lock_config_obj)
     }
+
+    fn get_max_default_entities (
+        &self,
+        env: &mut JNIEnv<'local>
+    ) -> Result<Option<jlong>> {
+
+        let method: &JMethodID = &self.get_max_default_entities_method;
+        call_jni_opt_long_method(env,&self.jobj, method, &[])
+    }
+
+    fn get_max_base64_size (
+        &self,
+        env: &mut JNIEnv<'local>
+    ) -> Result<Option<jlong>> {
+
+        let method: &JMethodID = &self.get_max_base64_size_method;
+        call_jni_opt_long_method(env,&self.jobj, method, &[])
+    }
+
 }

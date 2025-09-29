@@ -1,6 +1,7 @@
 package io.jans.cedarling.bridge.util;
 
 import io.jans.cedarling.bridge.authz.AuthorizeRequest;
+import io.jans.cedarling.bridge.authz.CedarEntityMapping;
 import io.jans.cedarling.bridge.authz.Context;
 import io.jans.cedarling.bridge.authz.EntityData;
 import io.jans.cedarling.bridge.util.jwt.JwtGenerator;
@@ -35,7 +36,7 @@ public class CedarlingAuthzTestData {
 
         InputStream inputstream = CedarlingAuthzTestData.class.getClassLoader().getResourceAsStream(file.getPath());
         if(inputstream == null) {
-            throw new RuntimeException("File not found");
+            throw new RuntimeException("File not found : " + file.getPath());
         }
         StringBuilder sb = new StringBuilder();
         byte [] buf = new byte[4096];
@@ -59,8 +60,9 @@ public class CedarlingAuthzTestData {
         JSONObject resource = obj.getJSONObject("resource");
         String resource_id = resource.getString("id");
         String entity_type = resource.getString("entity_type");
+        CedarEntityMapping cedar_mapping = new CedarEntityMapping(resource_id,entity_type);
         String resource_attributes = resource.getJSONObject("attributes").toString();
-        data.resource = new EntityData(resource_id, entity_type, resource_attributes);
+        data.resource = new EntityData(cedar_mapping, resource_attributes);
         return data;
     }
 }

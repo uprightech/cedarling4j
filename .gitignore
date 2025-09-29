@@ -56,3 +56,11 @@ java/lib
 ## cpp
 ##############################
 java/src/main/cpp/*
+
+
+###############################
+# just files
+###############################
+.tool-versions
+config.env
+justfile

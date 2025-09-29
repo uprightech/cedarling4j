@@ -172,10 +172,12 @@ impl <'local> JavaAuthorizeRequest <'local> {
         env: &mut JNIEnv<'local>
     ) -> Result<HashMap<String,String>> {
 
+        
         let token_names_obj = { require_some(self.get_token_names(env)?,JAVA_CLS_NAME,"tokens")? };
         let token_count = { token_names_obj.size(env)? };
         let mut tokens: HashMap<String,String> = HashMap::new();
         for i in 0..token_count {
+           
             let token_name_obj = token_names_obj.get(env,i)?;
             let token_name = java_string_to_native_string(env,&token_name_obj)?.ok_or_else (
                 || CedarlingBridgeError::GenericError("null token name in authorization request".to_string())
@@ -186,6 +188,7 @@ impl <'local> JavaAuthorizeRequest <'local> {
                     format!("null value for token`{}` in authorization request",token_name)
                 )
             )?;
+
             tokens.insert(token_name,token_value);
         }
         Ok(tokens)
